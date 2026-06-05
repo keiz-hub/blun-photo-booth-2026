@@ -1,7 +1,7 @@
 const photoSlots = 4;
 const defaultCanvas = { width: 240, height: 720 };
-const DEFAULT_STRIP_LABEL = 'BLUNians Photo Booth';
-const BLUN_DRIVE_UPLOAD_LINK = 'PASTE_YOUR_GOOGLE_DRIVE_OR_GOOGLE_FORM_UPLOAD_LINK_HERE';
+const DEFAULT_STRIP_LABEL = 'BLUNians 26-27';
+const BLUN_DRIVE_UPLOAD_LINK = 'https://drive.google.com/drive/folders/1T3WCQzW9mDJFNq8E0TZdjewSeryMumMq?usp=sharing';
 
 const templates = {
   emerald: { name: 'Emerald', bg: '#fff8e6', border: '#063b22', text: '#063b22', style: 'classic', accent: '#c7a22a' },
