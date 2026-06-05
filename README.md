@@ -1,0 +1,1 @@
+# blun-photo-booth-2026
