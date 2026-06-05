@@ -1,7 +1,7 @@
 const photoSlots = 4;
 const defaultCanvas = { width: 240, height: 720 };
-const DEFAULT_STRIP_LABEL = 'BLUNians 26-27';
-const BLUN_DRIVE_UPLOAD_LINK = 'https://drive.google.com/drive/folders/1T3WCQzW9mDJFNq8E0TZdjewSeryMumMq?usp=drive_link';
+const DEFAULT_STRIP_LABEL = 'BLUNians Photo Booth';
+const BLUN_DRIVE_UPLOAD_LINK = 'PASTE_YOUR_GOOGLE_DRIVE_OR_GOOGLE_FORM_UPLOAD_LINK_HERE';
 
 const templates = {
   emerald: { name: 'Emerald', bg: '#fff8e6', border: '#063b22', text: '#063b22', style: 'classic', accent: '#c7a22a' },
@@ -54,7 +54,9 @@ const overlayCache = new Map();
 
 const els = {
   offlinePage: document.getElementById('offlinePage'),
+  offlineBanner: document.getElementById('offlineBanner'),
   retryConnectionButton: document.getElementById('retryConnectionButton'),
+  retryConnectionBannerButton: document.getElementById('retryConnectionBannerButton'),
   screens: document.querySelectorAll('.screen'),
   stepPills: document.querySelectorAll('.step-pill'),
   gotoButtons: document.querySelectorAll('[data-goto]'),
@@ -110,20 +112,27 @@ const els = {
 };
 
 function bindEvents() {
-  els.retryConnectionButton.addEventListener('click', handleConnectionStatus);
+  if (els.retryConnectionButton) {
+    els.retryConnectionButton.addEventListener('click', handleConnectionStatus);
+  }
+
+  if (els.retryConnectionBannerButton) {
+    els.retryConnectionBannerButton.addEventListener('click', handleConnectionStatus);
+  }
+
   window.addEventListener('online', handleConnectionStatus);
   window.addEventListener('offline', handleConnectionStatus);
 
-  els.gotoButtons.forEach(button => {
-    button.addEventListener('click', event => {
-      const target = button.dataset.goto;
-      if (!target) return;
-      event.preventDefault();
-      navigateTo(target);
-    });
-  });
+  document.addEventListener('click', event => {
+    const gotoButton = event.target.closest('[data-goto]');
+    if (!gotoButton) return;
 
-  els.stepPills.forEach(button => button.addEventListener('click', () => navigateTo(button.dataset.goto)));
+    const target = gotoButton.dataset.goto;
+    if (!target) return;
+
+    event.preventDefault();
+    navigateTo(target);
+  });
 
   els.enableCameraButton.addEventListener('click', requestCameraAgain);
   els.enableCameraFromBanner.addEventListener('click', requestCameraAgain);
@@ -164,7 +173,6 @@ function bindEvents() {
     if (event.target === els.driveModal) closeDriveModal();
   });
 }
-
 
 function updateCaptureMode() {
   state.captureMode = els.timerMode.checked ? 'timer' : 'manual';
@@ -944,16 +952,13 @@ function loadTheme() {
 
 function handleConnectionStatus() {
   const isOffline = !navigator.onLine;
-  document.body.classList.toggle('offline-mode', isOffline);
+
+  if (els.offlineBanner) {
+    els.offlineBanner.classList.toggle('hidden', !isOffline);
+  }
 
   if (els.offlinePage) {
     els.offlinePage.classList.toggle('hidden', !isOffline);
-  }
-
-  if (isOffline) {
-    closeShareModal();
-    closeDriveModal();
-    closeCapturePreviewModal();
   }
 }
 
