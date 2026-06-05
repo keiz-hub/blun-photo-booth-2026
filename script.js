@@ -807,6 +807,31 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+
+function padNumber(value, length = 2) {
+  return String(value).padStart(length, '0');
+}
+
+function getPhotoBoothSequenceKey(date) {
+  return `bluniansPhotoBoothSequence-${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())}`;
+}
+
+function getNextPhotoBoothSequence(date) {
+  const key = getPhotoBoothSequenceKey(date);
+  const current = Number(localStorage.getItem(key) || '0');
+  const next = current + 1;
+  localStorage.setItem(key, String(next));
+  return next;
+}
+
+function buildPhotoBoothFilename(date = new Date()) {
+  const month = padNumber(date.getMonth() + 1);
+  const day = padNumber(date.getDate());
+  const year = date.getFullYear();
+  const sequence = padNumber(getNextPhotoBoothSequence(date), 4);
+  return `BLUN${month}${day}${year}-${sequence}.png`;
+}
+
 async function downloadStrip() {
   const required = getRequiredPhotoCount();
   if (state.photos.length < required) {
@@ -826,7 +851,7 @@ async function downloadStrip() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `BLUNians-Photo-Booth-${new Date().toISOString().slice(0, 10)}.png`;
+    link.download = buildPhotoBoothFilename();
     document.body.appendChild(link);
     link.click();
     link.remove();
