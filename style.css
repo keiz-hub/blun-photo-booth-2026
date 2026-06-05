@@ -414,7 +414,7 @@ input[type="text"], select, input[type="file"] {
   border: 1px solid var(--border);
   border-radius: 14px;
   color: var(--text);
-  background: var(--surface-strong);
+  background: #063b22;
   padding: 0 0.8rem;
   outline: none;
 }
