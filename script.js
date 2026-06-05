@@ -53,6 +53,8 @@ const imageCache = new Map();
 const overlayCache = new Map();
 
 const els = {
+  offlinePage: document.getElementById('offlinePage'),
+  retryConnectionButton: document.getElementById('retryConnectionButton'),
   screens: document.querySelectorAll('.screen'),
   stepPills: document.querySelectorAll('.step-pill'),
   gotoButtons: document.querySelectorAll('[data-goto]'),
@@ -108,6 +110,10 @@ const els = {
 };
 
 function bindEvents() {
+  els.retryConnectionButton.addEventListener('click', handleConnectionStatus);
+  window.addEventListener('online', handleConnectionStatus);
+  window.addEventListener('offline', handleConnectionStatus);
+
   els.gotoButtons.forEach(button => {
     button.addEventListener('click', event => {
       const target = button.dataset.goto;
@@ -935,8 +941,25 @@ function loadTheme() {
 }
 
 
+
+function handleConnectionStatus() {
+  const isOffline = !navigator.onLine;
+  document.body.classList.toggle('offline-mode', isOffline);
+
+  if (els.offlinePage) {
+    els.offlinePage.classList.toggle('hidden', !isOffline);
+  }
+
+  if (isOffline) {
+    closeShareModal();
+    closeDriveModal();
+    closeCapturePreviewModal();
+  }
+}
+
 function boot() {
   bindEvents();
+  handleConnectionStatus();
   loadTheme();
   applyTemplate('emerald');
   updateCaptureMode();
