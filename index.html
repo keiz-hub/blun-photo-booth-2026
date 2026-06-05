@@ -33,6 +33,12 @@
       <button type="button" id="enableCameraFromBanner">Enable Camera</button>
     </div>
 
+    <div id="offlineBanner" class="offline-banner hidden" role="status" aria-live="polite">
+      <strong>Internet Loss</strong>
+      <span>Look like you're disconnected. Please check your internet connection and try again.</span>
+      <button id="retryConnectionBannerButton" type="button">Retry</button>
+    </div>
+
     <nav class="progress-steps" aria-label="Photo booth progress">
       <button type="button" class="step-pill active" data-goto="landing"><span>1</span> Welcome</button>
       <button type="button" class="step-pill" data-goto="templates"><span>2</span> Template</button>
@@ -76,9 +82,9 @@
               <button type="button" class="template-btn" data-template="film"><span class="swatch film"></span><small>Film</small></button>
               <button type="button" class="template-btn" data-template="polaroid"><span class="swatch polaroid"></span><small>Polaroid</small></button>
               <button type="button" class="template-btn" data-template="noir"><span class="swatch noir"></span><small>Noir</small></button>
-              <button type="button" class="template-btn" data-template="filmstripRetro"><span class="swatch filmstrip-retro"></span><small>Retro Film</small></button>
               <button type="button" class="template-btn" data-template="campusDuo"><span class="swatch campus-duo"></span><small>Campus Duo</small></button>
               <button type="button" class="template-btn" data-template="campusSolo"><span class="swatch campus-solo"></span><small>Campus Solo</small></button>
+              <button type="button" class="template-btn" data-template="filmstripRetro"><span class="swatch filmstrip-retro"></span><small>Retro Film</small></button>
             </div>
 
             <p class="template-note">
@@ -249,7 +255,7 @@
     </main>
 
     <footer class="footer">
-      <p>© 2026 Bonifacio Luz Natividad Educational Foundation, Inc. • Made by Sir Gen for BLUNians</p>
+      <p>© 2026 Bonifacio Luz Natividad Educational Foundation, Inc. • Made for BLUNians</p>
     </footer>
   </div>
 <div id="capturePreviewModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="capturePreviewTitle">
