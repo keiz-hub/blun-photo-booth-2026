@@ -414,7 +414,7 @@ input[type="text"], select, input[type="file"] {
   border: 1px solid var(--border);
   border-radius: 14px;
   color: var(--text);
-  background: #063b22;
+  background: var(--surface-strong);
   padding: 0 0.8rem;
   outline: none;
 }
@@ -728,4 +728,26 @@ input[type="file"] { padding: 0.65rem 0.8rem; }
 .capture-layout .camera-panel {
   width: min(920px, 100%);
   margin: 0 auto;
+}
+
+
+/* v10 dropdown color fix: readable select choices in both dark and light mode */
+select {
+  color: var(--text);
+  background-color: rgba(6, 59, 34, 0.92);
+}
+
+select option {
+  color: #f7faf5;
+  background-color: #063b22;
+}
+
+body.light-mode select {
+  color: var(--green-900);
+  background-color: #ffffff;
+}
+
+body.light-mode select option {
+  color: var(--green-900);
+  background-color: #ffffff;
 }
